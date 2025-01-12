@@ -1,290 +1,266 @@
+public class Participants{
+
+private String name;
+private int age;
+private int phone;
+
+public Participants( String name, int age, int phone){
+
+this.name=name;
+this.age=age;
+this.phone=phone;
+}
+public String getname(){
+return name;
+}
+public void setname(String name){
+this.name=name;
+}
+public int getage(){
+return age;
+}
+public void setage(int age)
+{
+this.age=age;
+}
+public int getphone(){
+return phone;
+}
+public void setphone(int phone){
+this.phone=phone;
+}
+}
+
+
+
 import java.util.Scanner;
 
-// Player class to handle player details
-class Player {
-    String name;
-    int age;
-    String mailId;
-    int score = 0;
-
-    void setPlayerDetails() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter your name: ");
-        name = scanner.nextLine();
-        System.out.print("Enter your age: ");
-        age = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
-        System.out.print("Enter your email ID: ");
-        mailId = scanner.nextLine();
-    }
-
-    void displayPlayerDetails() {
-        System.out.println("\nPlayer Details:");
-        System.out.println("Name: " + name);
-        System.out.println("Age: " + age);
-        System.out.println("Email ID: " + mailId);
-        System.out.println("Final Score: " + score);
-    }
-}
-
-// Quiz class to handle quiz rules
-class Quiz {
-    void displayRules() {
-        System.out.println("\nQuiz Rules:");
-        System.out.println("1. You will be asked a series of questions.");
-        System.out.println("2. Each question has 4 options, and only 1 is correct.");
-        System.out.println("3. You can use lifelines, but only once each.");
-        System.out.println("4. If you answer wrong, the game ends.");
-        System.out.println("Good luck!\n");
-    }
-}
-
-// Question class to handle individual questions
-class Question {
-    String questionText;
-    String[] options;
-    int correctAnswer;
-
-    Question(String questionText, String[] options, int correctAnswer) {
-        this.questionText = questionText;
-        this.options = options;
-        this.correctAnswer = correctAnswer;
-    }
-
-    void displayQuestion() {
-        System.out.println(questionText);
-        for (int i = 0; i < options.length; i++) {
-            System.out.println((i + 1) + ". " + options[i]);
-        }
-    }
-}
-
-// Lifeline class to manage lifelines
-class Lifeline {
-    boolean fiftyFiftyUsed = false;
-    boolean audiencePollUsed = false;
-
-    void useFiftyFifty(Question question) {
-        if (!fiftyFiftyUsed) {
-            fiftyFiftyUsed = true;
-            System.out.println("50-50 Lifeline used!");
-            System.out.println("Here are two options:");
-            int correctOptionIndex = question.correctAnswer - 1;
-            int randomWrongOption;
-
-            // Randomly pick a wrong option
-            do {
-                randomWrongOption = (int) (Math.random() * question.options.length);
-            } while (randomWrongOption == correctOptionIndex);
-
-            System.out.println((correctOptionIndex + 1) + ". " + question.options[correctOptionIndex]);
-            System.out.println((randomWrongOption + 1) + ". " + question.options[randomWrongOption]);
-        } else {
-            System.out.println("50-50 Lifeline already used.");
-        }
-    }
-
-    void useAudiencePoll(Question question) {
-        if (!audiencePollUsed) {
-            audiencePollUsed = true;
-            System.out.println("Audience Poll Lifeline used!");
-            System.out.println("Audience poll results:");
-            int correctOptionIndex = question.correctAnswer - 1;
-
-            // Simulate audience poll results
-            int[] votes = new int[4];
-            votes[correctOptionIndex] = (int) (Math.random() * 30 + 40); // Correct answer gets 40-70 votes
-            for (int i = 0; i < votes.length; i++) {
-                if (i != correctOptionIndex) {
-                    votes[i] = (int) (Math.random() * 30); // Other options get 0-30 votes
-                }
-            }
-
-            for (int i = 0; i < votes.length; i++) {
-                System.out.println("Option " + (i + 1) + ": " + votes[i] + " votes");
-            }
-        } else {
-            System.out.println("Audience Poll Lifeline already used.");
-        }
-    }
-}
-
-// QuizGame main class
-public class QuizGame {
+class QuizGame {
     public static void main(String[] args) {
-        Player player = new Player();
-        player.setPlayerDetails();
+        Scanner sc = new Scanner(System.in);
 
-        Quiz quiz = new Quiz();
-        quiz.displayRules();
+        System.out.println("Enter your name:");
+        String name = sc.nextLine();
 
-        // Define questions
-        Question[] questions = {
-            new Question("What is the capital of France?", new String[]{"Berlin", "Madrid", "Paris", "Rome"}, 3),
-            new Question("What is the capital of India?", new String[]{"Delhi", "Chennai", "Pondicherry", "Bangalore"}, 1),
-            new Question("Which planet is known as the Red Planet?", new String[]{"Earth", "Mars", "Jupiter", "Saturn"}, 2),
-            new Question("Who wrote 'Romeo and Juliet'?", new String[]{"William Wordsworth", "Charles Dickens", "William Shakespeare", "Mark Twain"}, 3),
-            new Question("What is the boiling point of water (in Celsius)?", new String[]{"90", "80", "100", "120"}, 3),
-            new Question("Which is the largest ocean on Earth?", new String[]{"Indian Ocean", "Atlantic Ocean", "Arctic Ocean", "Pacific Ocean"}, 4),
-            new Question("Who painted the ceiling of the Sistine Chapel?", new String[]{"Vincent van Gogh", "Pablo Picasso", "Michelangelo", "Leonardo da Vinci"}, 3),
-            new Question("What is the chemical symbol for Gold?", new String[]{"Ag", "Au", "Pb", "Fe"}, 2),
-            new Question("Which gas is most abundant in the Earth's atmosphere?", new String[]{"Oxygen", "Nitrogen", "Carbon Dioxide", "Helium"}, 2),
-            new Question("What is the main ingredient in guacamole?", new String[]{"Tomato", "Avocado", "Onion", "Pepper"}, 2)
-        };
+        System.out.println("Enter your age:");
+        int age = sc.nextInt();
 
-        Lifeline lifeline = new Lifeline();
-        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your phone number:");
+        long phone = sc.nextLong();
 
-        // Quiz loop
-        for (Question question : questions) {
-            question.displayQuestion();
-            System.out.print("Enter your answer (1-4), use 50-50 lifeline (5), or audience poll (6): ");
-            int choice = scanner.nextInt();
+        System.out.println("Are you ready to take the quiz? 1) Yes  2) No");
+        int response = sc.nextInt();
 
-            if (choice == 5) {
-                lifeline.useFiftyFifty(question);
-                // After using 50-50, show audience poll option
-                System.out.print("Would you like to use the Audience Poll lifeline (y/n)? ");
-                char useAudiencePoll = scanner.next().charAt(0);
-                if (useAudiencePoll == 'y' || useAudiencePoll == 'Y') {
-                    lifeline.useAudiencePoll(question);
-                    System.out.print("Enter your answer (1-4): ");
-                    choice = scanner.nextInt();
-                }
-            } else if (choice == 6) {
-                lifeline.useAudiencePoll(question);
-                System.out.print("Enter your answer (1-4): ");
-                choice = scanner.nextInt();
-            }
-
-            if (choice == question.correctAnswer) {
-                System.out.println("Correct! You earn 10 points.\n");
-                player.score += 10;
-            } else {
-                System.out.println("Wrong answer. Game over!");
-                player.displayPlayerDetails();
-                System.exit(0);
-            }
+        if (response == 1) {
+            System.out.println("You can start the game!");
+      
+            displayrules();
+            question1(sc);
+           
+        } else {
+            System.out.println("END");
         }
 
-OUTPUT :
-
-Enter your name: ASFIYA
-Enter your age: 20
-Enter your email ID: asfiya
-
-Quiz Rules:
-1. You will be asked a series of questions.
-2. Each question has 4 options, and only 1 is correct.
-3. You can use lifelines, but only once each.
-4. If you answer wrong, the game ends.
-Good luck!
-
-What is the capital of France?
-1. Berlin
-2. Madrid
-3. Paris
-4. Rome
-Enter your answer (1-4), use 50-50 lifeline (5), or audience poll (6): 3
-Correct! You earn 10 points.
-
-What is the capital of India?
-1. Delhi
-2. Chennai
-3. Pondicherry
-4. Bangalore
-Enter your answer (1-4), use 50-50 lifeline (5), or audience poll (6): 1
-Correct! You earn 10 points.
-
-Which planet is known as the Red Planet?
-1. Earth
-2. Mars
-3. Jupiter
-4. Saturn
-Enter your answer (1-4), use 50-50 lifeline (5), or audience poll (6): 2
-Correct! You earn 10 points.
-
-Who wrote 'Romeo and Juliet'?
-1. William Wordsworth
-2. Charles Dickens
-3. William Shakespeare
-4. Mark Twain
-Enter your answer (1-4), use 50-50 lifeline (5), or audience poll (6): 3
-Correct! You earn 10 points.
-
-What is the boiling point of water (in Celsius)?
-1. 90
-2. 80
-3. 100
-4. 120
-Enter your answer (1-4), use 50-50 lifeline (5), or audience poll (6): 3
-Correct! You earn 10 points.
-
-Which is the largest ocean on Earth?
-1. Indian Ocean
-2. Atlantic Ocean
-3. Arctic Ocean
-4. Pacific Ocean
-Enter your answer (1-4), use 50-50 lifeline (5), or audience poll (6): 4
-Correct! You earn 10 points.
-
-Who painted the ceiling of the Sistine Chapel?
-1. Vincent van Gogh
-2. Pablo Picasso
-3. Michelangelo
-4. Leonardo da Vinci
-Enter your answer (1-4), use 50-50 lifeline (5), or audience poll (6): 6
-Audience Poll Lifeline used!
-Audience poll results:
-Option 1: 7 votes
-Option 2: 13 votes
-Option 3: 46 votes
-Option 4: 7 votes
-Enter your answer (1-4): 3
-Correct! You earn 10 points.
-
-What is the chemical symbol for Gold?
-1. Ag
-2. Au
-3. Pb
-4. Fe
-Enter your answer (1-4), use 50-50 lifeline (5), or audience poll (6): 5
-50-50 Lifeline used!
-Here are two options:
-2. Au
-4. Fe
-Would you like to use the Audience Poll lifeline (y/n)? y
-Audience Poll Lifeline already used.
-Enter your answer (1-4): 2
-Correct! You earn 10 points.
-
-Which gas is most abundant in the Earth's atmosphere?
-1. Oxygen
-2. Nitrogen
-3. Carbon Dioxide
-4. Helium
-Enter your answer (1-4), use 50-50 lifeline (5), or audience poll (6): 2
-Correct! You earn 10 points.
-
-What is the main ingredient in guacamole?
-1. Tomato
-2. Avocado
-3. Onion
-4. Pepper
-Enter your answer (1-4), use 50-50 lifeline (5), or audience poll (6): 2
-Correct! You earn 10 points.
-
-Congratulations! You've completed the quiz.
-
-Player Details:
-Name: ASFIYA
-Age: 20
-Email ID: asfiya
-Final Score: 100
-
-
-        System.out.println("Congratulations! You've completed the quiz.");
-        player.displayPlayerDetails();
-        scanner.close(); // Close the scanner to avoid resource leaks
+        sc.close();
     }
+
+    
+    	public static void displayrules() {
+    		System.out.println("RULES:");
+    		System.out.println("A)There will be series of questions asked to you");
+    		System.out.println("B)Each question has 4 options ,and among them only one is correct");
+    		System.out.println("C)You can use one lifeline named 50-50");
+    		System.out.println("D)If you answer wrong then,the game ends");
+    		System.out.println("E)Good Luck");
+    		}
+
+
+	public static void lifeline(Scanner sc) {
+        System.out.println("Do you want to use a lifeline? 1) Yes 2) No");
+        int response = sc.nextInt();
+        if (response == 1) {
+            System.out.println("Lifeline is used.");
+        } else {
+            System.out.println("No lifeline used.");
+        }
+    }
+
+    public static void question1(Scanner sc) {
+        System.out.println("What is the capital of India?");
+        System.out.println("1) Chennai");
+        System.out.println("2) Delhi");
+        System.out.println("3) Bangalore");
+        System.out.println("4) Mumbai");
+        System.out.println("5) Lifeline");
+        System.out.println("6) Quit");
+
+        int answer = sc.nextInt();
+        switch (answer) {
+            case 1:
+                System.out.println("Wrong answer.");
+                break;
+            case 2:
+                System.out.println("Right answer, you won 10 points!");
+                question2(sc);
+                break;
+            case 3:
+                System.out.println("Wrong answer.");
+                break;
+            case 4:
+                System.out.println("Wrong answer.");
+                break;
+            case 5:
+                lifeline(sc);
+                break;
+            case 6:
+                System.out.println("Quit.");
+                break;
+            default:
+                System.out.println("Invalid choice.");
+                break;
+        }
+    }
+
+    public static void question2(Scanner sc) {
+        System.out.println("Which is the Silicon Valley of India?");
+        System.out.println("1) Chennai");
+        System.out.println("2) Delhi");
+        System.out.println("3) Bangalore");
+        System.out.println("4) Mumbai");
+        System.out.println("5) Lifeline");
+        System.out.println("6) Quit");
+
+        int answer = sc.nextInt();
+        switch (answer) {
+            case 1:
+                System.out.println("Wrong answer.");
+                break;
+            case 2:
+                System.out.println("Wrong answer.");
+                break;
+            case 3:
+                System.out.println("Right answer, you won 10 points!");
+                question3(sc);
+                break;
+            case 4:
+                System.out.println("Wrong answer.");
+                break;
+            case 5:
+                lifeline(sc);
+                question3(sc);
+                break;
+            case 6:
+                System.out.println("Quit.");
+                break;
+            default:
+                System.out.println("Invalid choice.");
+                break;
+        }
+    }
+        public static void question3(Scanner sc) {
+        	 System.out.println("Which is the pink city of India?");
+             System.out.println("1) Chennai");
+             System.out.println("2) Delhi");
+             System.out.println("3) Jaipur");
+             System.out.println("4) Mumbai");
+             System.out.println("5) Lifeline");
+             System.out.println("6) Quit");
+             int answer = sc.nextInt();
+             switch (answer) {
+                 case 1:
+                     System.out.println("Wrong answer.");
+                     break;
+                 case 2:
+                     System.out.println("Wrong answer.");
+                     break;
+                 case 3:
+                     System.out.println("Right answer, you won 10 points!");
+                     question4(sc);
+                     break;
+                 case 4:
+                     System.out.println("Wrong answer.");
+                     break;
+                 case 5:
+                     lifeline(sc);
+                     question4(sc);
+                     break;
+                 case 6:
+                     System.out.println("Quit.");
+                     break;
+                 default:
+                     System.out.println("Invalid choice.");
+                     break;
+             }
+        }
+    }
+public static void question4(Scanner sc) {
+	 System.out.println("Which is the national bird of India?");
+    System.out.println("1) Peacock");
+    System.out.println("2) pigeon");
+    System.out.println("3) peahenr");
+    System.out.println("4) eagle");
+    System.out.println("5) Lifeline");
+    System.out.println("6) Quit");
+    int answer = sc.nextInt();
+    switch (answer) {
+        case 1:
+            System.out.println("Right answer, you won 10 points!.");
+            question5(sc);
+            break;
+        case 2:
+            System.out.println("Wrong answer.");
+            break;
+        case 3:
+            System.out.println("Wrong answer");
+            break;
+        case 4:
+            System.out.println("Wrong answer.");
+            break;
+        case 5:
+               lifeline(sc);
+                question5(sc);
+            break;
+        case 6:
+            System.out.println("Quit.");
+            break;
+        default:
+            System.out.println("Invalid choice.");
+            break;
+    }
+}
+
+public static void question5(Scanner sc) {
+	 System.out.println(" Which is the metal among following?");
+   System.out.println("1) Iron");
+   System.out.println("2) wood");
+   System.out.println("3) leather");
+   System.out.println("4) plastic");
+   System.out.println("5) Lifeline");
+   System.out.println("6) Quit");
+   int answer = sc.nextInt();
+   switch (answer) {
+       case 1:
+           System.out.println("Right answer, you won 10 points!.");
+           
+           break;
+       case 2:
+           System.out.println("Wrong answer.");
+           break;
+       case 3:
+           System.out.println("Wrong answer");
+           break;
+       case 4:
+           System.out.println("Wrong answer.");
+           break;
+       case 5:
+           lifeline(sc);
+           break;
+       case 6:
+           System.out.println("Quit.");
+           break;
+       default:
+           System.out.println("Invalid choice.");
+           break;
+   }
+}
 }
