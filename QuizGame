@@ -54,7 +54,7 @@ class QuizGame {
         if (response == 1) {
             System.out.println("You can start the game!");
       
-            displayrules();
+            displayrules(sc);
             question1(sc);
            
         } else {
@@ -264,3 +264,70 @@ public static void question5(Scanner sc) {
    }
 }
 }
+
+
+OUTPUT :
+
+Enter your name:
+ASFIYA
+Enter your age:
+20
+Enter your phone number:
+1234567890
+Are you ready to take the quiz? 1) Yes  2) No
+1
+You can start the game!
+RULES:
+A)There will be series of questions asked to you
+B)Each question has 4 options ,and among them only one is correct
+C)You can use one lifeline named 50-50
+D)If you answer wrong then,the game ends
+E)Good Luck
+What is the capital of India?
+1) Chennai
+2) Delhi
+3) Bangalore
+4) Mumbai
+5) Lifeline
+6) Quit
+2
+Right answer, you won 10 points!
+Which is the Silicon Valley of India?
+1) Chennai
+2) Delhi
+3) Bangalore
+4) Mumbai
+5) Lifeline
+6) Quit
+3
+Right answer, you won 10 points!
+Which is the pink city of India?
+1) Chennai
+2) Delhi
+3) Jaipur
+4) Mumbai
+5) Lifeline
+6) Quit
+3
+Right answer, you won 10 points!
+Which is the national bird of India?
+1) Peacock
+2) pigeon
+3) peahenr
+4) eagle
+5) Lifeline
+6) Quit
+1
+Right answer, you won 10 points!.
+ Which is the metal among following?
+1) Iron
+2) wood
+3) leather
+4) plastic
+5) Lifeline
+6) Quit
+5
+Do you want to use a lifeline? 1) Yes 2) No
+1
+Lifeline is used.
+
